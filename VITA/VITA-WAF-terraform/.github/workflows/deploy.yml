@@ -5,17 +5,17 @@ on:
     branches:
       - main
     paths:
-      - "agencies/**"
+      - 'agencies/**'
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout repo
       uses: actions/checkout@v3
 
-    - name: Setup Terraform
+    - name: Set up Terraform
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
