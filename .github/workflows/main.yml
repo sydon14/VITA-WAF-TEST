@@ -1,13 +1,12 @@
 name: Deploy WAF
 
 on:
-  workflow_dispatch:
-
   push:
     branches:
       - main
     paths:
       - 'agencies/**'
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -22,9 +21,12 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      working-directory: agencies/vita
 
     - name: Terraform Plan
       run: terraform plan
+      working-directory: agencies/vita
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
+      working-directory: agencies/vita
