@@ -1,8 +1,7 @@
 name: Deploy WAF
 
 on:
-  workflow_dispatch:  # 👈 Manual trigger via GitHub UI
-
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -22,9 +21,12 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      working-directory: agencies/dmv
 
     - name: Terraform Plan
       run: terraform plan
+      working-directory: agencies/dmv
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
+      working-directory: agencies/dmv
