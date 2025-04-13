@@ -10,4 +10,4 @@ module "dmv_waf" {
 }
 
 # This is a simulation update for DMV WAF deployment
-echo "# Trigger WAF deployment for DMV" 
+# Manual CI test from Sydon
