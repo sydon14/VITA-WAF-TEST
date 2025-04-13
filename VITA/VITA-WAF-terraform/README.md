@@ -1,11 +1,11 @@
-# VITA AWS WAF Terraform Deployment Starter
+# VITA AWS WAF Terraform Deployment Test
 
 This project provides a reusable Terraform module and automation structure to deploy AWS WAF WebACLs for multiple agencies (e.g., DMV, Tax, DOT) under the Virginia Information Technology Agency (VITA).
 
 ## 📁 Folder Structure
 
 ```
-waf-terraform-starter/
+waf-terraform-test/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml
