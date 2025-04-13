@@ -28,7 +28,7 @@ waf-terraform-test/
 - The module deploys a WebACL using AWS Managed Rules to block common attacks.
 - GitHub Actions automates the deployment when changes are pushed.
 
-## ✅ Included AWS Managed Rules
+## Included AWS Managed Rules
 
 This module uses AWS Managed Rules to protect applications against common threats:
 
@@ -37,13 +37,13 @@ This module uses AWS Managed Rules to protect applications against common threat
 - `AWSManagedRulesCommonRuleSet` - Protects against common threats like bad bots and request floods
 - `AWSManagedRulesKnownBadInputsRuleSet` - Blocks known malicious patterns
 
-## 🚀 Deployment Steps
+## Deployment Steps
 
 1. **Customize `main.tf`** under each agency folder with the agency's ALB ARN.
 2. **Commit changes** to the GitHub repository.
 3. **GitHub Actions** will automatically initialize and apply the WAF configuration.
 
-## 📥 Prerequisites
+## Prerequisites
 
 - Terraform installed locally if testing manually
 - AWS credentials with permissions to deploy WAF and manage ALBs
