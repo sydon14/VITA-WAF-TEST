@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "vita-terraform-state-bucket"
-    key            = "waf/${terraform.workspace}/terraform.tfstate"
+    bucket         = "vita-waf-test-bucket"
+    key            = "waf/tax/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "terraform-lock"
+    dynamodb_table = "vita-waf-test-locks"
     encrypt        = true
   }
 }
