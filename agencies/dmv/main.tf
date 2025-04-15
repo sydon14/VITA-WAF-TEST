@@ -3,9 +3,11 @@ provider "aws" {
 }
 
 module "dmv_waf" {
-  source        = "../../modules/waf"
-  web_acl_name  = "dmv-waf"
-  metric_name   = "dmv-waf-metrics"
-  alb_arn       = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/vita-waf-test-alb/05d040f986b72435"
-  managed_rules = var.managed_rules
+  source              = "../../modules/waf"
+  web_acl_name        = var.web_acl_name
+  metric_name         = var.metric_name
+  alb_arn             = var.alb_arn
+  managed_rules       = var.managed_rules
+  blocked_ips         = var.blocked_ips
+  geo_match_countries = var.geo_match_countries
 }

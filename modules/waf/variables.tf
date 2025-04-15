@@ -22,3 +22,17 @@ variable "managed_rules" {
     rule_group  = string
   }))
 }
+
+# CUSTOM RULES
+
+variable "blocked_ips" {
+  description = "List of IP addresses to block"
+  type        = list(string)
+  default     = []
+}
+
+variable "geo_match_countries" {
+  description = "List of ISO country codes to block"
+  type        = list(string)
+  default     = []
+}
