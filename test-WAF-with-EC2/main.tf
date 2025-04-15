@@ -4,16 +4,65 @@ provider "aws" {
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "vita-waf-test-vpc"
+  }
 }
 
-resource "aws_subnet" "subnet" {
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "vita-waf-test-igw"
+  }
+}
+
+resource "aws_subnet" "subnet_a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.1.0/24"
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "vita-waf-test-subnet-a"
+  }
+}
+
+resource "aws_subnet" "subnet_b" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "vita-waf-test-subnet-b"
+  }
+}
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "vita-waf-test-rt"
+  }
+}
+
+resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.subnet_a.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table_association" "b" {
+  subnet_id      = aws_subnet.subnet_b.id
+  route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_security_group" "allow_http" {
-  name        = "allow_http"
+  name        = "vita-waf-test-allow-http"
   description = "Allow HTTP"
   vpc_id      = aws_vpc.main.id
 
@@ -30,13 +79,17 @@ resource "aws_security_group" "allow_http" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "vita-waf-test-sg"
+  }
 }
 
 resource "aws_instance" "web" {
   ami                         = "ami-00a929b66ed6e0de6" # Amazon Linux 2
   instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.subnet.id
-  security_groups             = [aws_security_group.allow_http.name]
+  subnet_id                   = aws_subnet.subnet_a.id
+  security_groups             = [aws_security_group.allow_http.id]
   associate_public_ip_address = true
 
   user_data = <<-EOF
@@ -48,20 +101,24 @@ resource "aws_instance" "web" {
               EOF
 
   tags = {
-    Name = "WAF-Test-EC2"
+    Name = "vita-waf-test-ec2"
   }
 }
 
 resource "aws_lb" "alb" {
-  name               = "dmv-app"
+  name               = "vita-waf-test-alb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = [aws_subnet.subnet.id]
+  subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
   security_groups    = [aws_security_group.allow_http.id]
+
+  tags = {
+    Name = "vita-waf-test-alb"
+  }
 }
 
 resource "aws_lb_target_group" "target" {
-  name     = "dmv-targets"
+  name     = "vita-waf-test-targets"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
@@ -73,6 +130,10 @@ resource "aws_lb_target_group" "target" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     matcher             = "200"
+  }
+
+  tags = {
+    Name = "vita-waf-test-tg"
   }
 }
 
