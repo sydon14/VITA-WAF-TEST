@@ -1,14 +1,14 @@
 variable "web_acl_name" {
-  description = "The name of the WebACL"
+  description = "Name of the Web ACL"
   type        = string
 }
 
 variable "metric_name" {
-  description = "The name for metrics"
+  description = "Name of the CloudWatch metric"
   type        = string
 }
 
 variable "alb_arn" {
-  description = "ARN of the ALB to associate with the WAF"
+  description = "ARN of the Application Load Balancer"
   type        = string
 }

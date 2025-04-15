@@ -61,3 +61,9 @@ resource "aws_wafv2_web_acl" "web_acl" {
     }
   }
 }
+
+resource "aws_wafv2_web_acl_association" "waf_attach" {
+  resource_arn = var.alb_arn
+  web_acl_arn  = aws_wafv2_web_acl.web_acl.arn
+  depends_on   = [aws_wafv2_web_acl.web_acl]
+}
