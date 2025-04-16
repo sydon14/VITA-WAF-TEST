@@ -1,4 +1,4 @@
-name: Deploy WAF
+name: Deploy WAF 
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
       - stage
       - dev
     paths:
-      - 'agencies/**'
+      - 'agencies/dmv/**'
 
 jobs:
   terraform:
@@ -22,24 +22,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Get Changed Agency Folder
-        id: get-agency
-        run: |
-          folder=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'agencies/' | cut -d'/' -f2 | sort -u | head -n 1)
-          echo "AGENCY=${folder}" >> $GITHUB_ENV
-          echo "Detected agency folder: ${folder}"
-
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init
+      - name: Terraform Init - DMV
         run: terraform init
-        working-directory: agencies/${{ env.AGENCY }}
+        working-directory: agencies/dmv
 
-      - name: Terraform Plan
+      - name: Terraform Plan - DMV
         run: terraform plan
-        working-directory: agencies/${{ env.AGENCY }}
+        working-directory: agencies/dmv
 
-      - name: Terraform Apply
+      - name: Terraform Apply - DMV
         run: terraform apply -auto-approve
-        working-directory: agencies/${{ env.AGENCY }}
+        working-directory: agencies/dmv
