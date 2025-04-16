@@ -2,6 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
+# DMV WAF module 
 module "dmv_waf" {
   source              = "../../modules/waf"
   web_acl_name        = var.web_acl_name
