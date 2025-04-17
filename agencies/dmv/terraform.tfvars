@@ -1,8 +1,8 @@
 web_acl_name = "dmv-waf"
 metric_name  = "dmv-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/vita-waf-test-alb/05d040f986b72435"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dmv-waf-test-alb/48cc30b4f66be986"
 
-# ✅ AWS MANAGED RULE GROUPS
+# AWS MANAGED RULE GROUPS
 managed_rules = [
   {
     name        = "SQLiRuleSet"
@@ -21,6 +21,30 @@ managed_rules = [
     priority    = 3
     metric_name = "BadInputsRule"
     rule_group  = "AWSManagedRulesKnownBadInputsRuleSet"
+  },
+  {
+    name        = "AdminProtection"
+    priority    = 4
+    metric_name = "AdminProtection"
+    rule_group  = "AWSManagedRulesAdminProtectionRuleSet"
+  },
+  {
+    name        = "AmazonIPReputation"
+    priority    = 5
+    metric_name = "AmazonIPReputation"
+    rule_group  = "AWSManagedRulesAmazonIpReputationList"
+  },
+  {
+    name        = "AnonymousIPList"
+    priority    = 6
+    metric_name = "AnonymousIPList"
+    rule_group  = "AWSManagedRulesAnonymousIpList"
+  },
+  {
+    name        = "BotControl"
+    priority    = 7
+    metric_name = "BotControl"
+    rule_group  = "AWSManagedRulesBotControlRuleSet"
   }
 ]
 

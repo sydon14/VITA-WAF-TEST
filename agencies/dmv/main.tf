@@ -2,6 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
+# DMV WAF module 
 module "dmv_waf" {
   source              = "../../modules/waf"
   web_acl_name        = var.web_acl_name
@@ -11,3 +12,5 @@ module "dmv_waf" {
   blocked_ips         = var.blocked_ips
   geo_match_countries = var.geo_match_countries
 }
+
+# Triggering workflow test for DMV agency via dev branch

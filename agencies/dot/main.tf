@@ -3,8 +3,12 @@ provider "aws" {
 }
 
 module "dot_waf" {
-  source         = "../../modules/waf"
-  web_acl_name   = "dot-waf"
-  metric_name    = "dot-waf-metrics"
-  alb_arn        = "arn:aws:elasticloadbalancing:us-east-1:111122223333:loadbalancer/app/dot-app/xyz"
+  source              = "../../modules/waf"
+  web_acl_name        = var.web_acl_name
+  metric_name         = var.metric_name
+  alb_arn             = var.alb_arn
+  managed_rules       = var.managed_rules
+  blocked_ips         = var.blocked_ips
+  geo_match_countries = var.geo_match_countries
 }
+# Triggering workflow test for DOT agency via dev branch

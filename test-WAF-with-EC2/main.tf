@@ -106,19 +106,19 @@ resource "aws_instance" "web" {
 }
 
 resource "aws_lb" "alb" {
-  name               = "vita-waf-test-alb"
+  name               = "dmv-waf-test-alb"
   internal           = false
   load_balancer_type = "application"
   subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
   security_groups    = [aws_security_group.allow_http.id]
 
   tags = {
-    Name = "vita-waf-test-alb"
+    Name = "dmv-waf-test-alb"
   }
 }
 
 resource "aws_lb_target_group" "target" {
-  name     = "vita-waf-test-targets"
+  name     = "dmv-waf-test-targets"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
@@ -133,7 +133,7 @@ resource "aws_lb_target_group" "target" {
   }
 
   tags = {
-    Name = "vita-waf-test-tg"
+    Name = "dmv-waf-test-tg"
   }
 }
 
@@ -151,5 +151,110 @@ resource "aws_lb_listener" "listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.target.arn
+  }
+}
+
+
+# ========== DOT ALB Setup ==========
+
+resource "aws_lb" "dot_alb" {
+  name               = "dot-waf-test-alb"
+  internal           = false
+  load_balancer_type = "application"
+  subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
+  security_groups    = [aws_security_group.allow_http.id]
+
+  tags = {
+    Name = "dot-waf-test-alb"
+  }
+}
+
+resource "aws_lb_target_group" "dot_target" {
+  name     = "dot-waf-test-targets"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    path                = "/"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    matcher             = "200"
+  }
+
+  tags = {
+    Name = "dot-waf-test-tg"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "dot_ec2" {
+  target_group_arn = aws_lb_target_group.dot_target.arn
+  target_id        = aws_instance.web.id
+  port             = 80
+}
+
+resource "aws_lb_listener" "dot_listener" {
+  load_balancer_arn = aws_lb.dot_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.dot_target.arn
+  }
+}
+
+
+
+# ========== TAX ALB Setup ==========
+
+resource "aws_lb" "tax_alb" {
+  name               = "tax-waf-test-alb"
+  internal           = false
+  load_balancer_type = "application"
+  subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
+  security_groups    = [aws_security_group.allow_http.id]
+
+  tags = {
+    Name = "tax-waf-test-alb"
+  }
+}
+
+resource "aws_lb_target_group" "tax_target" {
+  name     = "tax-waf-test-targets"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    path                = "/"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    matcher             = "200"
+  }
+
+  tags = {
+    Name = "tax-waf-test-tg"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "tax_ec2" {
+  target_group_arn = aws_lb_target_group.tax_target.arn
+  target_id        = aws_instance.web.id
+  port             = 80
+}
+
+resource "aws_lb_listener" "tax_listener" {
+  load_balancer_arn = aws_lb.tax_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tax_target.arn
   }
 }
