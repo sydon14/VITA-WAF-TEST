@@ -1,7 +1,8 @@
 web_acl_name = "dot-waf"
 metric_name  = "dot-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dot-alb/xyz456"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dot-waf-test-alb/e7ba2c1ca70ac643"
 
+# AWS MANAGED RULE GROUPS
 managed_rules = [
   {
     name        = "SQLiRuleSet"
@@ -20,15 +21,41 @@ managed_rules = [
     priority    = 3
     metric_name = "BadInputsRule"
     rule_group  = "AWSManagedRulesKnownBadInputsRuleSet"
+  },
+  {
+    name        = "AdminProtection"
+    priority    = 4
+    metric_name = "AdminProtection"
+    rule_group  = "AWSManagedRulesAdminProtectionRuleSet"
+  },
+  {
+    name        = "AmazonIPReputation"
+    priority    = 5
+    metric_name = "AmazonIPReputation"
+    rule_group  = "AWSManagedRulesAmazonIpReputationList"
+  },
+  {
+    name        = "AnonymousIPList"
+    priority    = 6
+    metric_name = "AnonymousIPList"
+    rule_group  = "AWSManagedRulesAnonymousIpList"
+  },
+  {
+    name        = "BotControl"
+    priority    = 7
+    metric_name = "BotControl"
+    rule_group  = "AWSManagedRulesBotControlRuleSet"
   }
 ]
 
+# CUSTOM RULES - IP Blocking
 blocked_ips = [
   "198.51.100.1/32",
   "203.0.113.45/32"
 ]
 
+# CUSTOM RULES - Country Blocking
 geo_match_countries = [
-  "RU",
-  "CN"
+  "RU", # Russia
+  "CN"  # China
 ]
