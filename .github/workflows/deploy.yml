@@ -25,12 +25,27 @@ jobs:
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Detect Agency Directory
-        id: agency
+      - name: Detect Changed Agency
+        id: detect_agency
         run: |
-          AGENCY=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^agencies/' | cut -d'/' -f2 | sort -u | head -n 1)
-          echo "AGENCY=${AGENCY}" >> $GITHUB_ENV
+          git fetch --deepen=100 || true
+
+          echo "Looking for changes in agencies/..."
+          CHANGED=$(git diff --name-only HEAD~1 | grep '^agencies/' || true)
+          AGENCY=$(echo "$CHANGED" | cut -d'/' -f2 | sort -u | head -n 1)
+
+          if [ -z "$AGENCY" ]; then
+            echo "No agency detected. Exiting."
+            exit 1
+          fi
+
+          echo "AGENCY=$AGENCY" >> $GITHUB_ENV
           echo "Detected agency: $AGENCY"
+
+      - name: Validate Working Directory
+        run: |
+          echo "Checking if agencies/${{ env.AGENCY }} exists..."
+          ls -la agencies/${{ env.AGENCY }}
 
       - name: Terraform Init
         run: terraform init
