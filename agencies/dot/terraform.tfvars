@@ -1,6 +1,6 @@
 web_acl_name = "dot-waf"
 metric_name  = "dot-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dot-waf-test-alb/e7ba2c1ca70ac643"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dot-waf-test-alb/b7ee2133797f6b2d"
 
 # AWS MANAGED RULE GROUPS
 managed_rules = [
