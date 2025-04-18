@@ -32,19 +32,41 @@ This project supports several AWS Managed Rule Groups. Each agency can selective
 
 ###  Example Managed Rule Groups
 
-- `AWSManagedRulesSQLiRuleSet` - Blocks SQL Injection attempts
-- `AWSManagedRulesXSSRuleSet` - Blocks Cross-site scripting (XSS)
-- `AWSManagedRulesCommonRuleSet` - Protects against common threats like bad bots and request floods
-- `AWSManagedRulesKnownBadInputsRuleSet` - Blocks known malicious patterns
+- `AWSManagedRulesSQLiRuleSet` — Blocks SQL injection attacks
+- `AWSManagedRulesCommonRuleSet` — Detects common threats like bad bots and protocol anomalies
+- `AWSManagedRulesKnownBadInputsRuleSet` — Filters known malicious request patterns
+- `AWSManagedRulesAdminProtectionRuleSet` — Protects admin portals from unauthorized access
+- `AWSManagedRulesAmazonIpReputationList` — Filters requests from AWS-detected malicious IPs
+- `AWSManagedRulesAnonymousIpList` — Blocks traffic from VPNs, proxies, and Tor networks
+- `AWSManagedRulesBotControlRuleSet` — Detects and manages bot traffic
+
+> 💡 Rule priorities and metric names are defined per agency, offering flexibility and fine-tuned protection.
+
+##  Custom Rules (Agency Specific)
+
+Each agency can also implement custom WAF rules:
+
+- **IP Blocking**
+  ```hcl
+  blocked_ips = [
+    "198.51.100.1/32",
+    "203.0.113.45/32"
+  ]
+
+- **Geo Location Blocking**
+    geo_match_countries = [
+    "RU", # Russia
+    "CN"  # China
+  ]
 
 ## Deployment Steps
 
-1. **Customize `main.tf`** under each agency folder with the agency's ALB ARN.
-2. **Commit changes** to the GitHub repository.
-3. **GitHub Actions** will automatically initialize and apply the WAF configuration.
+1. **Customize `main.tf`** under each agencies/ subfolder.
+2. **Commit changes** to the appropriate GitHub branch (dev, stage, or prod).
+3. **GitHub Actions** will automatically deploy the WAF configuration based on the branch.
 
 ## Prerequisites
 
-- Terraform installed locally if testing manually
-- AWS credentials with permissions to deploy WAF and manage ALBs
-- GitHub repository connected with GitHub Actions enabled
+- Terraform installed locally (for manual testing)
+- AWS CLI with appropriate permissions (WAF, S3, ALB)
+- GitHub repository with Actions enabled
