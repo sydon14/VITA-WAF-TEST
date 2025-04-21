@@ -45,6 +45,12 @@ managed_rules = [
     priority    = 7
     metric_name = "BotControl"
     rule_group  = "AWSManagedRulesBotControlRuleSet"
+  },
+  {
+    name        = "XSSRuleSet"
+    priority    = 8
+    metric_name = "XSSRule"
+    rule_group  = "AWSManagedRulesXSSRuleSet"
   }
 ]
 
