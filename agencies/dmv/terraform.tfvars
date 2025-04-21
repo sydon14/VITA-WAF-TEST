@@ -11,46 +11,46 @@ managed_rules = [
     rule_group  = "AWSManagedRulesSQLiRuleSet"
   },
   {
-    name        = "CommonRuleSet"
+    name        = "XSSRuleSet"
     priority    = 2
+    metric_name = "XSSRule"
+    rule_group  = "AWSManagedRulesXSSRuleSet"
+  },
+  {
+    name        = "CommonRuleSet"
+    priority    = 3
     metric_name = "CommonRule"
     rule_group  = "AWSManagedRulesCommonRuleSet"
   },
   {
     name        = "BadInputsRuleSet"
-    priority    = 3
+    priority    = 4
     metric_name = "BadInputsRule"
     rule_group  = "AWSManagedRulesKnownBadInputsRuleSet"
   },
   {
     name        = "AdminProtection"
-    priority    = 4
+    priority    = 5
     metric_name = "AdminProtection"
     rule_group  = "AWSManagedRulesAdminProtectionRuleSet"
   },
   {
     name        = "AmazonIPReputation"
-    priority    = 5
+    priority    = 6
     metric_name = "AmazonIPReputation"
     rule_group  = "AWSManagedRulesAmazonIpReputationList"
   },
   {
     name        = "AnonymousIPList"
-    priority    = 6
+    priority    = 7
     metric_name = "AnonymousIPList"
     rule_group  = "AWSManagedRulesAnonymousIpList"
   },
   {
     name        = "BotControl"
-    priority    = 7
+    priority    = 8
     metric_name = "BotControl"
     rule_group  = "AWSManagedRulesBotControlRuleSet"
-  },
-  {
-    name        = "XSSRuleSet"
-    priority    = 8
-    metric_name = "XSSRule"
-    rule_group  = "AWSManagedRulesXSSRuleSet"
   }
 ]
 
