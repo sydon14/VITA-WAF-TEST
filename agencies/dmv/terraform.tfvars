@@ -1,6 +1,6 @@
 web_acl_name = "dmv-waf"
 metric_name  = "dmv-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dmv-waf-test-alb/48cc30b4f66be986"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dmv-waf-test-alb/9c02b528dfe6dfd2"
 
 # AWS MANAGED RULE GROUPS
 managed_rules = [
@@ -45,7 +45,13 @@ managed_rules = [
     priority    = 7
     metric_name = "BotControl"
     rule_group  = "AWSManagedRulesBotControlRuleSet"
-  }
+  },
+  # {
+  #   name        = "XSSRuleSet"
+  #   priority    = 8
+  #   metric_name = "XSSRule"
+  #   rule_group  = "AWSManagedRulesXSSRuleSet"
+  # }
 ]
 
 # CUSTOM RULES - IP Blocking

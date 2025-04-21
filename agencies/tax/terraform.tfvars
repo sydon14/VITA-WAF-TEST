@@ -1,6 +1,6 @@
 web_acl_name = "tax-waf"
 metric_name  = "tax-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/tax-waf-test-alb/1b69eb47c80e0a90"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/tax-waf-test-alb/a313557ac38c3730"
 
 # AWS MANAGED RULE GROUPS
 managed_rules = [
@@ -45,7 +45,13 @@ managed_rules = [
     priority    = 7
     metric_name = "BotControl"
     rule_group  = "AWSManagedRulesBotControlRuleSet"
-  }
+  },
+  # {
+  #   name        = "XSSRuleSet"
+  #   priority    = 8
+  #   metric_name = "XSSRule"
+  #   rule_group  = "AWSManagedRulesXSSRuleSet"
+  # }
 ]
 
 # CUSTOM RULES - IP Blocking
