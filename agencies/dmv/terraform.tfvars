@@ -1,6 +1,6 @@
 web_acl_name = "dmv-waf"
 metric_name  = "dmv-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dmv-waf-test-alb/a60589fd6e3e36de"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/dmv-waf-test-alb/9c02b528dfe6dfd2"
 
 # AWS MANAGED RULE GROUPS
 managed_rules = [
