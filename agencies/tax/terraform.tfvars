@@ -1,6 +1,6 @@
 web_acl_name = "tax-waf"
 metric_name  = "tax-waf-metrics"
-alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:575108935978:loadbalancer/app/tax-waf-test-alb/a313557ac38c3730"
+alb_arn      = "arn:aws:elasticloadbalancing:us-east-1:782557964167:loadbalancer/app/tax-waf-test-alb/a3d67df401daf002"
 
 # AWS MANAGED RULE GROUPS
 managed_rules = [
